@@ -6,7 +6,7 @@
  * Entrypoint of the KFS kernel
  *
  * created: 2022/10/11 - lfalkau <lfalkau@student.42.fr>
- * updated: 2022/11/25 - lfalkau <lfalkau@student.42.fr>
+ * updated: 2022/12/15 - glafond- <glafond-@student.42.fr>
  */
 
 #include <kernel/gdt.h>
@@ -18,6 +18,8 @@
 #include <kernel/print.h>
 #include <kernel/multiboot.h>
 #include <kernel/kpm.h>
+#include <kernel/pit.h>
+#include <kernel/time.h>
 
 /* Initialize all descriptor tables (gdt, idt, ...)
  *
@@ -31,6 +33,7 @@ static void init_descriptor_tables() {
 void kernel_main(unsigned long multiboot_info_addr) {
 	multiboot_info_t *mbi = (multiboot_info_t *)multiboot_info_addr;
 
+	pit_init();
 	init_descriptor_tables();
 	VGA_initialize();
 	KBD_initialize();
